@@ -1,5 +1,13 @@
 Changelog for a2pdf (see http://perl.jonallen.info/projects/a2pdf)
 
+1.08 - 17 September 2004
+  Now compatible with Windows as well as UNIX
+  Added support for formfeed characters in input stream
+    (thanks to Trevor Richardson)
+  Page title can be specified (--title option)
+  Image icon can be added to page header (--icon option)
+  Added '--timestamp' option
+
 1.07 - 14 April 2004
   Added '--help' and '--doc' options
   Documentation update
