@@ -1,0 +1,8 @@
+Changes
+MANIFEST			This list of files
+README
+Makefile.PL
+a2pdf
+t/compile.t
+t/pod.t
+t/test_manifest
