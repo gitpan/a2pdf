@@ -3,6 +3,7 @@ MANIFEST			This list of files
 README
 Makefile.PL
 a2pdf
+lib/Script/a2pdf.pm
 t/compile.t
 t/pod.t
 t/test_manifest

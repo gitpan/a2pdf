@@ -1,5 +1,14 @@
 Changelog for a2pdf (see http://perl.jonallen.info/projects/a2pdf)
 
+1.10 - 18 December 2004
+  Added '--page-size' and '--page-orientation' options
+  Bug fixed in the &generate_footer() subroutine (thanks
+    to Michael McGlade)
+  Added '--settings' option to load configuration files
+
+1.09 - 18 September 2004
+  Added dummy module 'Script::a2pdf' for indexing by CPAN
+
 1.08 - 17 September 2004
   Now compatible with Windows as well as UNIX
   Added support for formfeed characters in input stream
