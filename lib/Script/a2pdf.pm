@@ -79,6 +79,19 @@ feature requires that the Perl::Tidy module is installed.
 
 Page width and height in points. Default page size is 595 x 842 (A4).
 
+=item --page-size
+
+Sets the page size to one of the 'standard' paper formats, e.g. "A4" 
+or "Letter". Requires the module L<Paper::Specs> to be installed.
+
+=item --page-orientation
+
+Sets the page orientation, acceptable values are 'portrait' or 
+'landscape'. Overrides the "--page-height" and "--page-width" options, 
+i.e. the option set "--page-height=300 --page-width=100 
+--page-orientation=landscape" will set the page height to 100 points 
+and the width to 300 points to force landscape format.
+
 =item --margins
 
 =item --left-margin
@@ -115,6 +128,10 @@ will act as expected, i.e. a new page will be started in the output PDF file.
 This can be disabled with the C<--noformfeed> option which will cause all
 formfeed characters to be ignored.
 
+=item --settings
+
+Location of a settings file (described below).
+
 =back
 
 Options may be given in any format recognised by the I<Getopt::Long> Perl
@@ -124,16 +141,41 @@ abbreviated to their shortest unique value.
 If the input filename is not given, then B<a2pdf> will expect to
 receive input from STDIN.
 
+=head2 Config / settings files
+
+Options to B<a2pdf> may be stored in settings files. These have the same 
+format as the command line options with the exception that the '--' 
+chharacters preceding the option name are optional.
+
+A single option may be contained on each line of the settings file, e.g.
+
+ --timestamp
+ icon=/usr/local/images/logo.png
+
+At startup, B<a2pdf> looks for a default settings file named L<a2pdf.conf> 
+in the current directory, the user's home directory, and the directory 
+containing the B<a2pdf> script.
+
+Settings will cascade as follows;
+
+ Default 'a2pdf.conf' settings file              -->
+ Settings file specified by '--settings' option  -->
+ Options given on the command line
+
+i.e. options on the command line will always take precedence. 
+
 =head1 DEPENDENCIES
 
-B<a2pdf> requires the I<PDF::API2> Perl module (tested with PDF::API2
+B<a2pdf> requires the L<PDF::API2> Perl module (tested with PDF::API2
 version 0.3r77).
 
-Perl syntax highlighting requires the I<Perl::Tidy> module (tested with
+Perl syntax highlighting requires the L<Perl::Tidy> module (tested with
 Perl::Tidy version 20031021).
 
-To include images in the page header, the modules I<File::Type> and
-I<Image::Size> must be installed.
+To include images in the page header, the modules L<File::Type> and
+L<Image::Size> must be installed.
+
+To enable the "--page-size" option, the L<Paper::Specs> module must be installed.
 
 =head1 BUGS / ISSUES
 
@@ -145,32 +187,17 @@ If the Perl syntax highlighting feature is used and the input Perl code
 uses source filter modules, then depending on the changes made by the
 source filter the syntax highlighting may not be performed correctly. 
 
-A workaround for this is to use the Filter::ExtractSource module which
-captures Perl code after the source filtering has been processed during
-compilation. This can be run in a pipeline with B<a2pdf> as follows:
-
- perl -c -MFilter::ExtractSource input.pl | a2pdf >output.pdf
-
-=item *
-
-When running under Red Hat 9, the LANG environment variable must be set
-to 'C'.
-
 =back
 
 =head1 SEE ALSO
 
 B<a2pdf> homepage - L<http://perl.jonallen.info/projects/a2pdf>
 
+pod2pdf - L<http://perl.jonallen.info/projects/pod2pdf>
+
 PDF::API2 - L<http://search.cpan.org/dist/PDF-API2>
 
 Perl::Tidy - L<http://search.cpan.org/dist/Perl-Tidy>
-
-File::Type - L<http://search.cpan.org/dist/File-Type>
-
-Image::Size - L<http://search.cpan.org/dist/Image-Size>
-
-Filter::ExtractSource - L<http://search.cpan.org/dist/Filter-ExtractSource>
 
 =head1 AUTHOR
 
@@ -183,7 +210,7 @@ Copyright (C) 2004 Jon Allen (JJ)
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
-
 =cut
+
 
 1;

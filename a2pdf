@@ -17,7 +17,7 @@ use Pod::Usage;
 use POSIX qw(locale_h);
 use Text::ParseWords;
 
-our $VERSION = '1.10';
+our $VERSION = '1.11';
 
 
 #--Tell the OS we are going to create binary data-----------------------

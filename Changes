@@ -1,5 +1,8 @@
 Changelog for a2pdf (see http://perl.jonallen.info/projects/a2pdf)
 
+1.11 - 19 December 2004
+  Documentation fix
+
 1.10 - 18 December 2004
   Added '--page-size' and '--page-orientation' options
   Bug fixed in the &generate_footer() subroutine (thanks
