@@ -17,22 +17,20 @@ unless( $@ )
 		};
 	}
 
-my $script_name = "a2pdf";
+
 
 WriteMakefile(
-		'NAME'      => $script_name,
-        'VERSION_FROM'   => $script_name,
-
-		'EXE_FILES' =>  [ $script_name ],
-            
-		'PREREQ_PM' => { 'PDF::API2' => 0,
-                },
-
-		'MAN1PODS'  => {
-			$script_name => "\$(INST_MAN1DIR)/$script_name.1",
+		'NAME'         => 'a2pdf',
+                'AUTHOR'       => 'Jon Allen <jj@jonallen.info>',
+                'ABSTRACT'     => 'Converts ASCII text to PDF format, with optional line/page numbering and Perl syntax highlighting',
+                'VERSION_FROM' => 'bin/a2pdf',
+		'EXE_FILES'    => [ 'bin/a2pdf' ],            
+		'PREREQ_PM'    => { 'PDF::API2' => 0.60, },
+		'MAN1PODS'     => {
+			'bin/a2pdf' => "\$(INST_MAN1DIR)/a2pdf.1",
 			},
 
-		clean => { FILES => "*.bak $script_name-*" },
+		clean => { FILES => "*.bak a2pdf-*" },
 		);
         
 1;
