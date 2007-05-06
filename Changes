@@ -1,5 +1,8 @@
 Changelog for a2pdf (see http://perl.jonallen.info/projects/a2pdf)
 
+1.12 - 06 April 2007
+  Fixed inconsistent version numbering
+
 1.09 - 06 April 2007
   Updated for compatibility with latest version of PDF::API2 (0.60)
   Changed license to Artistic 2.0
