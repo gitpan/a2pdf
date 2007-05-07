@@ -124,7 +124,7 @@ sub print {
     $self->{newline_flag} = 0;
   }
 
-  $self->print_line_number;
+  $self->print_line_number if $self->{line_numbers};
   $self->print_text_with_style($line);
   $self->{newline_flag} = 1;
 }
@@ -146,7 +146,7 @@ sub write_line {    # This is the write_line method called by Perl::Tidy
     $self->newline;
     $self->{newline_flag} = 0;
   }
-  $self->print_line_number;
+  $self->print_line_number if $self->{line_numbers};
 
   if ($line_type eq 'CODE') {
     $self->print_text_with_style($1) if ($line_text =~ /^(\s+)/);
@@ -170,6 +170,7 @@ sub newline {
   
   $self->linefeed;
   $self->{line_number}++;
+  $self->{overflow} = 0;
 }
 
 
@@ -180,9 +181,12 @@ sub linefeed {
   
   $self->{y_position} -= $self->{line_spacing};
   $self->{x_position}  = $self->{left_margin} + $self->{line_number_width};
+  $self->{overflow}    = 1;
     
   if ($self->{y_position} < ($self->{bottom_margin} + $self->{footer_height})) {
+    my $style = $self->{style};
     $self->formfeed;
+    $self->set_style($style);
   } 
 }
 
@@ -328,6 +332,7 @@ sub print_text_with_style {
 sub print_word {
   my $self = shift;
   my $word = shift;
+  
 
     my $width = $self->{text}->advancewidth($word);
     if ($self->{x_position} + $width > $self->{page_width} - $self->{right_margin}) {
@@ -339,6 +344,11 @@ sub print_word {
         return;
       }
       $self->linefeed;
+      if ($word =~ /^\s+$/ &&
+          $self->{overflow} &&
+          $self->{x_position} == $self->{left_margin} + $self->{line_number_width}) {
+        return;
+      }
     }
     $self->{x_position} += $self->{text}->textlabel($self->{x_position},
                                                     $self->{y_position},
@@ -373,9 +383,10 @@ sub set_style {
     $self->{fontcache}->{$font} = $self->{pdf}->corefont($font);
   }
   
+  $self->{style}      = $style;
   $self->{font}       = $font;
   $self->{text_color} = $self->{stylist}->{$style}->{color} || '#000000';
-  $self->{text_size}  = $self->{stylist}->{$style}->{size} || $self->{font_size};
+  $self->{text_size}  = $self->{stylist}->{$style}->{size}  || $self->{font_size};
   
   $self->{text}->font($self->{fontcache}->{$font},$self->{text_size});
   $self->{nspace}     = $self->{text}->advancewidth('n');
